@@ -1,0 +1,9 @@
+.listElem {
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.text {
+  padding: 17px;
+  color: #010101;
+}

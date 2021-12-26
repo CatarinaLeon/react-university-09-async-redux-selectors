@@ -1,0 +1,7 @@
+.main-container {
+  display: grid;
+  grid-template-columns: minmax(72px, auto) 1fr;
+  align-items: stretch;
+  width: 100%;
+  min-height: 100vh;
+}

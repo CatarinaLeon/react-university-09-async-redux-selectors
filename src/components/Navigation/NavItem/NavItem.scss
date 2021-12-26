@@ -1,0 +1,39 @@
+.NavItem {
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+
+  &:hover {
+    // min-width: 100%;
+    background-color: rgb(236, 239, 241);
+  }
+  &.NavItem-dark:hover {
+    background-color: #666;
+  }
+  & .iconWrapper {
+    height: 24px;
+  }
+
+  & .itemName {
+    margin-left: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  &.NavItem-dark .itemName {
+    color: #fff;
+  }
+  &.NavItemActive > .itemName {
+    color: var(--accent-color);
+  }
+}

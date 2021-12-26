@@ -1,0 +1,8 @@
+.paper {
+  padding: 10px;
+  background-color: #fff;
+  transition: all 200ms;
+}
+.paper:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}

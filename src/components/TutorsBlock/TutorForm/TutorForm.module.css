@@ -1,0 +1,20 @@
+.container {
+  margin-bottom: 32px;
+}
+
+.inner {
+  padding: 14px;
+}
+
+.formName {
+  margin-bottom: 24px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.error {
+  color: #f00;
+  margin-top: -30px;
+  margin-bottom: 14px;
+  font-size: 14px;
+}

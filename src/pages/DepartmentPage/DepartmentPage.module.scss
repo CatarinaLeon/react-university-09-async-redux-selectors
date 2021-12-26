@@ -1,0 +1,35 @@
+.wrapper {
+  margin-bottom: 24px;
+}
+
+.nav {
+  display: flex;
+  margin-bottom: 24px;
+  background-color: #161d2a;
+}
+
+.linkWrapper {
+  flex: 0 0 264px;
+  text-align: center;
+}
+
+.link {
+  display: inline-block;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  color: #757575;
+}
+
+.activeLink {
+  color: #fff;
+}
+
+.text {
+  padding: 16px;
+  line-height: 1.6;
+}

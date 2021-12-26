@@ -1,0 +1,15 @@
+@value main-gap from '../../styles/variables.module.css';
+
+.section {
+  margin-bottom: main-gap;
+  display: flex;
+  align-items: stretch;
+  column-gap: main-gap;
+}
+
+.text {
+  padding: 22px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+}

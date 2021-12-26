@@ -1,0 +1,49 @@
+.card {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 124px;
+}
+
+.imgWrapper {
+  min-height: 80px;
+  margin-bottom: 6px;
+}
+
+.imgWrapper img {
+  border-radius: 50%;
+}
+
+.wrapper {
+  margin-bottom: 6px;
+}
+
+.text {
+  margin-bottom: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #757575;
+}
+
+.btn_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.button {
+  padding: 1px 4px;
+  border: none;
+  background: none;
+}
+
+.active {
+  composes: button;
+  cursor: pointer;
+}
+
+.disabled {
+  composes: button;
+  cursor: not-allowed;
+}

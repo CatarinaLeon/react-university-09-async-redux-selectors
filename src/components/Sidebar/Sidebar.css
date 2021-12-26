@@ -1,0 +1,90 @@
+.Sidebar {
+  position: sticky;
+  top: 0px;
+  min-height: 100vh;
+  width: 320px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+  background-color: #fff;
+  will-change: width;
+  transition: width 250ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;
+  z-index: 10;
+}
+
+.Sidebar-closed {
+  width: 72px;
+}
+
+.Sidebar-decor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding-right: 20px;
+  background-color: #161d2a;
+  color: #eee;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  position: absolute;
+  right: -16px;
+  top: 96px;
+  height: 32px;
+  width: 32px;
+  background: var(--accent-color) url('../../images/hide.svg') 49% 50% no-repeat;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: inset -4px -4px 7px rgba(0, 0, 0, 0.2);
+  transition: all 300ms;
+}
+
+.toggle-btn:hover {
+  animation-name: goLeft;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes goLeft {
+  0% {
+    background-position: 50% 50%;
+  }
+  50% {
+    background-position: -60% 50%;
+  }
+  51% {
+    background-position: 160% 50%;
+  }
+  100% {
+    background-position: 50% 50%;
+  }
+}
+
+.Sidebar-closed .toggle-btn {
+  background-image: url('../../images/show.png');
+  background-position: 51% 50%;
+}
+
+.Sidebar-closed .toggle-btn:hover {
+  animation-name: goRight;
+}
+
+@keyframes goRight {
+  0% {
+    background-position: 51% 50%;
+  }
+  50% {
+    background-position: 161% 50%;
+  }
+  51% {
+    background-position: -59% 50%;
+  }
+  100% {
+    background-position: 51% 50%;
+  }
+}

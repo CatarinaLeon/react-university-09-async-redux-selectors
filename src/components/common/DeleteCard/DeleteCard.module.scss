@@ -1,0 +1,20 @@
+.modalContent {
+  text-align: center;
+
+  & p {
+    margin-bottom: 24px;
+  }
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: center;
+
+  & button {
+    min-width: 96px;
+  }
+
+  & button:first-of-type {
+    margin-right: 32px;
+  }
+}
