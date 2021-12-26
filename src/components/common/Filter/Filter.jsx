@@ -17,7 +17,7 @@ const Filter = ({ label = '' }) => {
           type="text"
           value={filter}
           // onChange={e => onFilterChange(e.target.value)}
-          onChange={e => dispatch(citiesActions(e.target.value))}
+          onChange={e => dispatch(citiesActions.changeFilter(e.target.value))}
         ></input>
       </label>
     </div>

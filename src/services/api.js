@@ -1,4 +1,5 @@
 const BASE_URL = 'https://6137592feac1410017c182b7.mockapi.io';
+// const BASE_URL = 'https://61bb5963e943920017784e35.mockapi.io';
 
 // Отправляет запрос с определенными опциями для получ данных
 // Получить данные

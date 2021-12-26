@@ -8,50 +8,50 @@ import Paper from '../common/Paper/Paper';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Tutor from './Tutor/Tutor';
 import TutorForm from './TutorForm/TutorForm';
-import * as api from '../../services/api';
-import { setTutors } from 'redux/tutors/tutorsActions';
+// import * as api from '../../services/api';
+// import { setTutors } from 'redux/tutors/tutorsActions';
+import { getTutors } from 'redux/tutors/tutorsOperations';
 import plusImg from '../../images/add.svg';
 
-const API_ENDPOINT = 'tutors';
+// const API_ENDPOINT = 'tutors';
 
-const TutorsBlock = ({ tutors, onSetTutors }) => {
-  // const [tutors, setTutors] = useState([]);
+const TutorsBlock = ({ tutors, onGetTutors, error, loading }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  // const [newTutor, setNewTutor] = useState(null);
   // api request status
-  const [firstLoading, setFirstLoading] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [firstLoading, setFirstLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
 
   // FETCH TUTORS
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
+    onGetTutors();
+    // const controller = new AbortController();
+    // const signal = controller.signal;
 
-    const fetchTutors = async () => {
-      setFirstLoading(true);
-      setLoading(true);
-      try {
-        const tutors = await api.getData(API_ENDPOINT, { signal });
-        // setTutors(tutors);
-        onSetTutors(tutors);
-      } catch (error) {
-        if (!signal.aborted) {
-          setError(error.message);
-        }
-      } finally {
-        if (!signal.aborted) {
-          setFirstLoading(false);
-          setLoading(false);
-        }
-      }
-    };
-    fetchTutors();
+    // const fetchTutors = async () => {
+    //   setFirstLoading(true);
+    //   setLoading(true);
+    //   try {
+    //     const tutors = await api.getData(API_ENDPOINT, { signal });
+    //     // setTutors(tutors);
+    //     onSetTutors(tutors);
+    //   } catch (error) {
+    //     if (!signal.aborted) {
+    //       setError(error.message);
+    //     }
+    //   } finally {
+    //     if (!signal.aborted) {
+    //       setFirstLoading(false);
+    //       setLoading(false);
+    //     }
+    //   }
+    // };
+    // fetchTutors();
 
-    return () => {
-      controller.abort();
-    };
-  }, [onSetTutors]);
+    // return () => {
+    //   controller.abort();
+    // };
+  }, [onGetTutors]);
 
   // ADD TUTOR
   const toggleForm = useCallback(
@@ -59,41 +59,12 @@ const TutorsBlock = ({ tutors, onSetTutors }) => {
     [],
   );
 
-  // useEffect(() => {
-  //   if (!newTutor) return;
-
-  //   let isTutorsMounted = true;
-  //   const addTutor = async () => {
-  //     setLoading(true);
-  //     setError(null);
-  //     try {
-  //       const savedTutor = await api.saveItem(API_ENDPOINT, newTutor);
-  //       if (isTutorsMounted) {
-  //         setTutors(prevTutors => [...prevTutors, savedTutor]);
-  //       }
-  //     } catch (error) {
-  //       if (isTutorsMounted) {
-  //         setError(error.message);
-  //       }
-  //     } finally {
-  //       if (isTutorsMounted) {
-  //         setLoading(false);
-  //         setNewTutor(null);
-  //         setIsFormOpen(false);
-  //       }
-  //     }
-  //   };
-  //   addTutor();
-  //   return () => {
-  //     isTutorsMounted = false;
-  //   };
-  // }, [newTutor]);
-
-  const noTutors = !firstLoading && !tutors.length;
+  // const noTutors = !firstLoading && !tutors.length;
+  const noTutors = !loading && !tutors.length;
 
   return (
     <>
-      {firstLoading && <Skeleton />}
+      {loading && <Skeleton />}
 
       {loading && <Loader />}
 
@@ -129,12 +100,14 @@ const TutorsBlock = ({ tutors, onSetTutors }) => {
 
 // ПОЛУЧАЕМ СОСТОЯНИЕ
 const mapStateToProps = state => ({
-  tutors: state.tutors,
+  tutors: state.tutors.items,
+  loading: state.tutors.loading,
+  error: state.tutors.error,
 });
 
 // ПОЛУЧАЕМ МЕТОДЫ ДЛЯ ИЗМЕНЕНИЯ СОСТОЯНИЯ
 const mapDispatchToProps = dispatch => ({
-  onSetTutors: tutors => dispatch(setTutors(tutors)),
+  onGetTutors: tutors => dispatch(getTutors(tutors)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TutorsBlock);

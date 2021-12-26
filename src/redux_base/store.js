@@ -1,7 +1,12 @@
-import { createStore, combineReducers } from 'redux';
-import { devToolsEnhancer } from 'redux-devtools-extension';
+// import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+// import { devToolsEnhancer } from 'redux-devtools-extension';
 import citiesReduser from './cities/citiesReducer';
 import tutorsReducer from './tutors/tutorsReducer';
+
+import { customMiddlewareLogger, myMiddleware } from './middlewear/logger';
 
 // {
 //   tutors: [],
@@ -12,12 +17,19 @@ import tutorsReducer from './tutors/tutorsReducer';
 //   departments: [],
 // }
 
-const rootReduser = combineReducers({
+const rootReducer = combineReducers({
   tutors: tutorsReducer,
   departments: () => [],
   cities: citiesReduser,
 });
 
-const store = createStore(rootReduser, devToolsEnhancer());
+const middleware = [thunk, customMiddlewareLogger, myMiddleware];
+
+// const store = createStore(rootReduser, devToolsEnhancer());
+
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(...middleware)),
+);
 
 export default store;

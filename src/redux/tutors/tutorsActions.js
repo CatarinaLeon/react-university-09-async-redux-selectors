@@ -1,21 +1,21 @@
 import { createAction } from '@reduxjs/toolkit';
 
-const setTutors = createAction('tutors/set');
-const addTutor = createAction('tutors/tutor_add');
+// const setTutors = createAction('tutors/set');
+// const addTutor = createAction('tutors/tutor_add');
 
-export { setTutors, addTutor };
+const getTutorsRequest = createAction('tutors/getTutorsRequest');
+const getTutorsSuccess = createAction('tutors/getTutorsSuccess');
+const getTutorsError = createAction('tutors/getTutorsError');
 
-////////////////////////////////////////////
+const addTutorRequest = createAction('tutors/addTutorsRequest');
+const addTutorSuccess = createAction('tutors/addTutorsSuccess');
+const addTutorError = createAction('tutors/addTutorsError');
 
-// ИЗМЕНЯЕМ PAYLOAD ПЕРЕД ТЕМ КАК ЗАПИСАТЬ ЕГО В СТЕЙТ
-
-// import { createAction, nanoid } from '@reduxjs/toolkit';
-
-// const setTutors = createAction('tutors/set', tutor => ({
-//   payload: {
-//     ...tutor,
-//     id: nanoid(),
-//   },
-// }));
-
-// ____________________________________________________
+export {
+  getTutorsRequest,
+  getTutorsSuccess,
+  getTutorsError,
+  addTutorRequest,
+  addTutorSuccess,
+  addTutorError,
+};
