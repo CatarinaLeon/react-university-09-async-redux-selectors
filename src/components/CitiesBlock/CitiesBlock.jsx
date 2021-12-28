@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 // import { useLocalStorage } from 'react-use';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -15,7 +15,7 @@ import ItemsList from '../ItemsList/ItemsList';
 
 // import * as storage from '../../services/localStorage';
 // import * as actions from 'redux/cities/citiesActions';
-import { citiesActions, citiesOperations } from 'redux/cities';
+import { citiesActions, citiesOperations, citiesSelectors } from 'redux/cities';
 // import * as api from 'services/api';
 
 import addIcon from 'images/add.svg';
@@ -35,10 +35,15 @@ const { getCities, addCity, editCity, deleteCity } = citiesOperations;
 
 const CitiesBlock = () => {
   // const cities = useSelector(state => state.cities.items);
-  const cities = useSelector(state => state.cities.data.items);
-  const filter = useSelector(state => state.cities.filter);
-  const loading = useSelector(state => state.cities.data.loading);
-  const error = useSelector(state => state.cities.data.error);
+  // const cities = useSelector(state => state.cities.data.items);
+  // const filter = useSelector(state => state.cities.filter);
+  // const loading = useSelector(state => state.cities.data.loading);
+  // const error = useSelector(state => state.cities.data.error);
+  const cities = useSelector(citiesSelectors.getCities);
+  // const filteredCities = useSelector(citiesSelectors.getFilteredCities)
+  const filteredCities = useSelector(citiesSelectors.getMemoizedFilteredCities);
+  const loading = useSelector(citiesSelectors.getLoading);
+  const error = useSelector(citiesSelectors.getError);
   const dispatch = useDispatch();
 
   // form / modal
@@ -199,13 +204,13 @@ const CitiesBlock = () => {
     setActiveCity(null);
   };
 
-  // RENDER
-  const filteredCities = useMemo(() => {
-    const normalizedFilter = filter.toLowerCase();
-    return cities.filter(city =>
-      city.name.toLowerCase().includes(normalizedFilter),
-    );
-  }, [cities, filter]);
+  //перенесли в citiesSelectors.js
+  // const filteredCities = useMemo(() => {
+  //   const normalizedFilter = filter.toLowerCase();
+  //   return cities.filter(city =>
+  //     city.name.toLowerCase().includes(normalizedFilter),
+  //   );
+  // }, [cities, filter]);
 
   const noCities = !loading && !cities.length;
 

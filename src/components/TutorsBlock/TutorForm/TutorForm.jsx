@@ -6,7 +6,8 @@ import Paper from '../../common/Paper/Paper';
 import ErrorMsg from 'components/common/ErrorMsg/ErrorMsg';
 import Loader from 'components/common/Loader/Loader';
 // import { addTutor } from 'redux/tutors/tutorsActions';
-import { addTutor } from 'redux/tutors/tutorsOperations';
+// import { addTutor } from 'redux/tutors/tutorsOperations';
+import { tutorsSelectors, tutorsOperations } from 'redux/tutors';
 // import * as api from 'services/api';
 import s from './TutorForm.module.css';
 
@@ -217,12 +218,14 @@ TutorForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  loading: state.tutors.loading,
-  error: state.tutors.error,
+  // loading: state.tutors.loading,
+  // error: state.tutors.error,
+  loading: tutorsSelectors.getLoading(state),
+  error: tutorsSelectors.getError(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAddTutor: tutor => dispatch(addTutor(tutor)),
+  onAddTutor: tutor => dispatch(tutorsOperations.addTutor(tutor)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TutorForm);

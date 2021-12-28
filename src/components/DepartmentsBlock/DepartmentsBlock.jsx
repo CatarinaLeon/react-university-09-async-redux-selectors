@@ -1,4 +1,5 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import AbsenceMsg from 'components/common/AbsenceMsg/AbsenceMsg';
 import AddForm from '../common/AddForm/AddForm';
@@ -9,12 +10,13 @@ import ErrorMsg from '../common/ErrorMsg/ErrorMsg';
 import Loader from '../common/Loader/Loader';
 import Modal from '../common/Modal/Modal';
 import ItemsList from '../ItemsList/ItemsList';
-import * as api from 'services/api';
+import { departmentsOperations, departmentsSelectors } from 'redux/departments';
+// import * as api from 'services/api';
 import addIcon from 'images/add.svg';
 import pencilIcon from 'images/pencil.png';
 import fingerIcon from 'images/finger.png';
 
-const API_ENDPOINT = 'departments';
+// const API_ENDPOINT = 'departments';
 
 const ACTION = {
   NONE: 'none',
@@ -23,31 +25,34 @@ const ACTION = {
   DELETE: 'delete',
 };
 
-const departmentsReducer = (state = [], action) => {
-  switch (action.type) {
-    case 'set':
-      return action.payload;
+// const departmentsReducer = (state = [], action) => {
+//   switch (action.type) {
+//     case 'set':
+//       return action.payload;
 
-    case 'add':
-      return [...state, action.payload];
+//     case 'add':
+//       return [...state, action.payload];
 
-    case 'edit':
-      return state.map(department =>
-        department.id === action.payload.id ? action.payload : department,
-      );
+//     case 'edit':
+//       return state.map(department =>
+//         department.id === action.payload.id ? action.payload : department,
+//       );
 
-    case 'delete':
-      return state.filter(department => department.id !== action.payload);
+//     case 'delete':
+//       return state.filter(department => department.id !== action.payload);
 
-    default:
-      console.log('Type is not wright!');
-      break;
-  }
-};
+//     default:
+//       console.log('Type is not wright!');
+//       break;
+//   }
+// };
 
 const DepartmentsBlock = () => {
-  const [departments, dispatch] = useReducer(departmentsReducer, []);
-  // const [departments, setDepartments] = useState([]);
+  // const [departments, dispatch] = useReducer(departmentsReducer, []);
+  const departments = useSelector(departmentsSelectors.getDepartments);
+  const loading = useSelector(departmentsSelectors.getLoading);
+  const error = useSelector(departmentsSelectors.getError);
+  const dispatch = useDispatch();
   // form / modal
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
   const [openedModal, setOpenedModal] = useState(ACTION.NONE);
@@ -55,27 +60,28 @@ const DepartmentsBlock = () => {
   const [action, setAction] = useState(ACTION.NONE);
   const [activeDepartment, setActiveDepartment] = useState(null);
   // api request status
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
 
   // GET DEPARTMENTS
 
   useEffect(() => {
-    const fetchDepartments = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const departments = await api.getData(API_ENDPOINT);
-        dispatch({ type: 'set', payload: departments });
-        // setDepartments(departments);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDepartments();
-  }, []);
+    dispatch(departmentsOperations.getDepartments());
+    // const fetchDepartments = async () => {
+    //   setLoading(true);
+    //   setError(null);
+    //   try {
+    //     const departments = await api.getData(API_ENDPOINT);
+    //     dispatch({ type: 'set', payload: departments });
+    //     // setDepartments(departments);
+    //   } catch (error) {
+    //     setError(error.message);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+    // fetchDepartments();
+  }, [dispatch]);
 
   // ADD DEPARTMENT
 
@@ -89,29 +95,35 @@ const DepartmentsBlock = () => {
   useEffect(() => {
     if (action !== ACTION.ADD) return;
 
-    const addDepartment = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const newDepartment = await api.saveItem(
-          API_ENDPOINT,
-          activeDepartment,
-        );
-        dispatch({ type: 'add', payload: newDepartment });
-        // setDepartments(prevDepartments => [...prevDepartments, newDepartment]);
-        toggleAddForm();
-        toast.success(`Факультет ${newDepartment.name} успешно добавлен!`);
-      } catch (error) {
-        setError(error.message);
-        toast.error('Что-то пошло не так :(');
-      } finally {
-        setAction(ACTION.NONE);
-        setLoading(false);
-        setActiveDepartment(null);
-      }
-    };
-    addDepartment();
-  }, [action, activeDepartment]);
+    dispatch(departmentsOperations.addDepartment(activeDepartment)).then(() => {
+      toast.success(`Факультет ${activeDepartment.name} успешно добавлен!`);
+      toggleAddForm();
+      setAction(ACTION.NONE);
+      setActiveDepartment(null);
+    });
+    // const addDepartment = async () => {
+    //   setLoading(true);
+    //   setError(null);
+    //   try {
+    //     const newDepartment = await api.saveItem(
+    //       API_ENDPOINT,
+    //       activeDepartment,
+    //     );
+    //     dispatch({ type: 'add', payload: newDepartment });
+
+    //     toggleAddForm();
+    //     toast.success(`Факультет ${newDepartment.name} успешно добавлен!`);
+    //   } catch (error) {
+    //     setError(error.message);
+    //     toast.error('Что-то пошло не так :(');
+    //   } finally {
+    //     setAction(ACTION.NONE);
+    //     setLoading(false);
+    //     setActiveDepartment(null);
+    //   }
+    // };
+    // addDepartment();
+  }, [action, activeDepartment, dispatch]);
 
   // EDIT DEPARTMENT
 
@@ -132,33 +144,33 @@ const DepartmentsBlock = () => {
   useEffect(() => {
     if (action !== ACTION.EDIT) return;
 
-    const editDepartment = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const updatedDepartment = await api.editItem(
-          API_ENDPOINT,
-          activeDepartment,
-        );
-        dispatch({ type: 'edit', payload: updatedDepartment });
-        // setDepartments(prevDepartments =>
-        //   prevDepartments.map(department =>
-        //     department.id === updatedDepartment.id
-        //       ? updatedDepartment
-        //       : department,
-        //   ),
-        // );
-      } catch (error) {
-        setError(error.message);
-      } finally {
+    dispatch(departmentsOperations.editDepartment(activeDepartment)).then(
+      () => {
         setAction(ACTION.NONE);
         closeModal();
-        setLoading(false);
         setActiveDepartment(null);
-      }
-    };
-    editDepartment();
-  }, [action, activeDepartment]);
+      },
+    );
+    // const editDepartment = async () => {
+    //   setLoading(true);
+    //   setError(null);
+    //   try {
+    //     const updatedDepartment = await api.editItem(
+    //       API_ENDPOINT,
+    //       activeDepartment,
+    //     );
+    //     dispatch({ type: 'edit', payload: updatedDepartment });
+    //   } catch (error) {
+    //     setError(error.message);
+    //   } finally {
+    //     setAction(ACTION.NONE);
+    //     closeModal();
+    //     setLoading(false);
+    //     setActiveDepartment(null);
+    //   }
+    // };
+    // editDepartment();
+  }, [action, activeDepartment, dispatch]);
 
   // DELETE DEPARTMENT
 
@@ -172,31 +184,35 @@ const DepartmentsBlock = () => {
   useEffect(() => {
     if (action !== ACTION.DELETE) return;
 
-    const deleteDepartment = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const deletedDepartment = await api.deleteItem(
-          API_ENDPOINT,
-          activeDepartment.id,
-        );
-        dispatch({ type: 'delete', payload: deletedDepartment.id });
-        // setDepartments(prevDepartments =>
-        //   prevDepartments.filter(
-        //     department => department.id !== deletedDepartment.id,
-        //   ),
-        // );
-      } catch (error) {
-        setError(error.message);
-      } finally {
+    dispatch(departmentsOperations.deleteDepartment(activeDepartment.id)).then(
+      () => {
         setAction(ACTION.NONE);
         closeModal();
-        setLoading(false);
         setActiveDepartment(null);
-      }
-    };
-    deleteDepartment();
-  }, [action, activeDepartment]);
+      },
+    );
+
+    // const deleteDepartment = async () => {
+    //   setLoading(true);
+    //   setError(null);
+    //   try {
+    //     const deletedDepartment = await api.deleteItem(
+    //       API_ENDPOINT,
+    //       activeDepartment.id,
+    //     );
+    //     dispatch({ type: 'delete', payload: deletedDepartment.id });
+
+    //   } catch (error) {
+    //     setError(error.message);
+    //   } finally {
+    //     setAction(ACTION.NONE);
+    //     closeModal();
+    //     setLoading(false);
+    //     setActiveDepartment(null);
+    //   }
+    // };
+    // deleteDepartment();
+  }, [action, activeDepartment, dispatch]);
 
   const closeModal = () => {
     setOpenedModal(ACTION.NONE);

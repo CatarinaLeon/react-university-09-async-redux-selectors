@@ -1,0 +1,46 @@
+{
+  "sidebar": {
+    "university": "Univercity",
+    "departments": "Departments"
+  },
+  "university": {
+    "info": "University information",
+    "word": "university",
+    "description": "Experience, concentration of knowledge and the ability to avoid most of the mistakes when hiring. We know what most local and foreign companies want and we can give it to you. And we are constantly improving our programming courses, adding something new there. You can personally read the success stories of our graduates to be convinced of the effectiveness of our teaching methodology. Yes, we will start with the basics and the simplest information. We know that most people come to us with zero knowledge."
+  },
+  "common": {
+    "add": "add",
+    "cancel-add": "Cancel adding",
+    "edit": "edit",
+    "delete": "delete"
+  },
+  "tutors": {
+    "tutors": "Tutors",
+    "no-tutors": "No tutors yet",
+    "add-tutor": "Add tutor",
+    "adding-tutor": "Adding tutor",
+    "invite": "Invite"
+  },
+  "cities": {
+    "cities": "Cities",
+    "no-cities": "No cities yet",
+    "city-filter": "Filter cities",
+    "add-city": "Add city",
+    "adding-city": "Adding city",
+    "city": "City"
+  },
+  "departments": {
+    "departments": "Departments",
+    "no-departments": "No departments yet",
+    "add-department": "Add department",
+    "adding-department": "Adding department",
+    "department": "Department",
+    "success-add": "Department '{{name}}' has been added!",
+    "success-edit": "Department '{{name}}' has been edited!",
+    "success-delete": "Department has been deleted!"
+  },
+  "department": {
+    "description": "description",
+    "history": "history"
+  }
+}

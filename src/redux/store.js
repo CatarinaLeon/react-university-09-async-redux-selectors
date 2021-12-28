@@ -14,10 +14,13 @@ import {
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 // import citiesReducer from './cities/citiesSlice';
 import citiesReducer from './cities/citiesReducer';
+import departmentsReducer from './departments/departmens.Reducer';
 import tutorsReducer from './tutors/tutorsReducer';
 // import { customMiddlewareLogger } from './middlewear/logger';
 
-// {
+///////  BEFORE ASYNC REDUX
+
+// const state = {
 //   tutors: [],
 //   cities: {
 //     items: [],
@@ -25,6 +28,29 @@ import tutorsReducer from './tutors/tutorsReducer';
 //   },
 //   departments: [],
 // }
+
+///////  BEFORE ASYNC REDUX
+
+// const state = {
+//   tutors: {
+//     items: [],
+//     loading: false,
+//     error: null,
+//   },
+//   cities: {
+//     data: {
+//       items: [],
+//       loading: false,
+//       error: null,
+//     },
+//     filter: '',
+//   },
+//   departments: {
+//     items: [],
+//     loading: false,
+//     error: null,
+//   },
+// };
 
 const persistCitiesConfig = {
   key: 'filter',
@@ -41,7 +67,7 @@ const store = configureStore({
   reducer: {
     tutors: tutorsReducer,
     cities: persistReducer(persistCitiesConfig, citiesReducer),
-    departments: () => [],
+    departments: departmentsReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

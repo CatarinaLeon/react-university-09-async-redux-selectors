@@ -1,4 +1,5 @@
 import { useState } from 'react';
+// import { useTranslation } from 'react-i18next';
 import Section from 'components/common/Section/Section';
 import Header from 'components/common/Header/Header';
 import CitiesBlock from 'components/CitiesBlock/CitiesBlock';
@@ -13,11 +14,13 @@ import departmentsIcon from 'images/robot.png';
 const { name, description } = univerInfo;
 
 const UniversityPage = () => {
+  // const { t } = useTranslation();
   const [showTutots, setShowTutots] = useState(true); // TEMPORARY
 
   return (
     <>
       <Header title="Информация о университете" />
+      {/* <Header title={t('university.info')} /> */}
 
       <UniversityBlock name={name} descr={description} />
 
